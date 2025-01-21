@@ -1,41 +1,54 @@
-Steps:
-    python -m venv network-ai
-    source network-ai/bin/activate
+# Steps
 
-    Install Dependencies:
+1. Create a virtual environment:
+   ```bash
+   python -m venv network-ai
+   source network-ai/bin/activate
+   ```
 
-    pip install -r requirements.txt
+2. Install Dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-    Train the Model:
+3. Train the Model:
+   ```bash
+   python ai/train_model.py
+   ```
 
-    python ai/train_model.py
+4. Start Prometheus Exporter:
+   ```bash
+   python ai/prometheus_exporter.py
+   ```
 
-    Start Prometheus Exporter:
+5. Run the Flask API with Gunicorn:
+   ```bash
+   gunicorn --workers 4 --bind 0.0.0.0:5000 ai.app:app
+   ```
 
-    python ai/prometheus_exporter.py
+6. Test the API:
+   Visit the following URL in your browser or use a tool like `curl`:
+   ```
+   http://localhost:5000/network-status
+   ```
 
-    Run the Flask API with Gunicorn:
+---
 
+# File System
 
-    gunicorn --workers 4 --bind 0.0.0.0:5000 ai.app:app
-
-    Test the API:
-
-    http://localhost:5000/network-status
-
-
-File System:
+```
 ai/
 ├── app.py                  # Flask API for serving predictions and reports
 ├── prometheus.yml          # Prometheus configuration file
 ├── prometheus_exporter.py  # Script to collect and expose network metrics
 ├── report_generator.py     # Text report generation using Hugging Face
 ├── requirements.txt        # Python dependencies
-├── train_model.py          # Script to train the predictive maintenance m
-└── network-ai/                 # Virtual environment (auto-generated)
+├── train_model.py          # Script to train the predictive maintenance model
+└── network-ai/             # Virtual environment (auto-generated)
     ├── bin/
     ├── include/
     ├── lib/
     ├── lib64 -> lib/
     ├── pyvenv.cfg
     └── share/
+```
